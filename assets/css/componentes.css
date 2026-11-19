@@ -1026,6 +1026,7 @@ body {
   max-width: 94%;
   line-height: 1.5;
   white-space: pre-wrap;
+  text-align: left;
   overflow-wrap: anywhere;
 }
 .cgt-user {
@@ -1035,6 +1036,7 @@ body {
 .cgt-bot {
   background: #292b32;
   align-self: flex-start;
+  white-space: normal;
 }
 .cgt-bot a {
   color: #ffb3bd;
