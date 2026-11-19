@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#111111"><title>Horas anuales y proporcionales | CGT Primark Gran Vía</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#171717;background:#f5f5f5;font-synthesis:none}
+*{box-sizing:border-box}body{margin:0}a{color:inherit}.wrap{width:min(900px,calc(100% - 32px));margin:auto}
+header{background:#111;color:#fff;border-bottom:5px solid #d71920}.head{display:flex;justify-content:space-between;align-items:center;padding:20px 0;gap:12px;flex-wrap:wrap}
+.brand{font-weight:900;letter-spacing:.035em;line-height:1.3}.brand small{display:block;font-size:12px;letter-spacing:.10em;color:#eee;font-weight:600}.back{font-size:13px;color:white;text-decoration:none;border:1px solid #666;padding:9px 12px;border-radius:8px}
+main{padding:28px 0 48px}h1{font-size:clamp(26px,5vw,38px);line-height:1.15;margin:8px 0}h2{font-size:22px;margin:0 0 8px}p{line-height:1.6;margin:8px 0 14px}.intro{color:#515151;max-width:750px}.eyebrow{font-size:12px;font-weight:800;color:#b81920;letter-spacing:.09em;text-transform:uppercase}
+.panel{background:white;border:1px solid #dedede;border-radius:16px;padding:clamp(16px,3vw,26px);margin-top:20px;box-shadow:0 2px 12px #00000007}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.field{min-width:0}.field.full{grid-column:1/-1}
+label{display:block;font-weight:750;font-size:13px;margin:0 0 7px}select,input{display:block;width:100%;min-width:0;height:46px;padding:10px 12px;border:1px solid #bcbcbc;border-radius:9px;background:#fff;color:#191919;font:inherit;font-size:16px}
+input:focus,select:focus{outline:3px solid #f9c7c8;outline-offset:1px;border-color:#ba1921}
+.note{font-size:13px;color:#5a5a5a}.results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0}
+.metric{padding:18px 14px;background:#f5f5f5;border-radius:12px;min-width:0}.metric.feature{background:#171717;color:#fff}
+.metric span{display:block;font-size:12px;margin-bottom:5px;color:inherit;opacity:.76}.metric strong{font-size:clamp(23px,5vw,30px);font-variant-numeric:tabular-nums;word-break:break-word}.metric small{display:block;font-size:12px;margin-top:4px}
+.alert{border-left:4px solid #d71920;background:#fff4f4;border-radius:5px;padding:12px 14px;font-size:13px;line-height:1.55}
+.ok{border-left-color:#555;background:#f3f3f3}.steps{font-size:14px;line-height:1.7;color:#444}
+.btn{border:0;background:#c81920;color:#fff;border-radius:9px;padding:12px 16px;font:inherit;font-weight:750;cursor:pointer}
+.btn:focus-visible{outline:3px solid #111;outline-offset:3px}.btn:hover{background:#a61219}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}.subtle{background:#e9e9e9;color:#111}.subtle:hover{background:#d7d7d7}
+footer{background:#111;color:#f4f4f4;font-size:13px;padding:22px 0}footer p{margin:0}
+@media(max-width:520px){.grid,.results{grid-template-columns:1fr}.metric strong{font-size:27px}.head{align-items:flex-start}main{padding-top:22px}}
+@media print{header,footer,.actions{display:none}body{background:white}.panel{box-shadow:none;break-inside:avoid}main{padding:0}.wrap{width:100%}}
+</style>
+</head>
+<body>
+<header><div class="wrap head"><div class="brand">CGT PRIMARK <small>GRAN VÍA · MADRID</small></div><a class="back" href="./index.html">← Volver al portal</a></div></header>
+<main class="wrap">
+<p class="eyebrow">Herramientas · Jornada laboral</p><h1>Calcula tus horas de trabajo</h1>
+<p class="intro">Consulta las horas anuales de tu contrato y estima las que te corresponden si no has trabajado todo el año. Sin nombres, sin subir rotas y sin almacenar tus datos: los cálculos se hacen en este navegador.</p>
+<section class="panel" aria-labelledby="title1"><h2 id="title1">1. Jornada anual según tu contrato</h2>
+<p class="note">Cifras transcritas del cartel de CGT Primark Gran Vía para 2026. Selecciona también la distribución de días de tu jornada cuando haya más de una opción.</p>
+<div class="grid"><div class="field full"><label for="contract">Horas de contrato y distribución</label><select id="contract"></select></div></div>
+<div class="results" aria-live="polite">
+<div class="metric feature"><span>Horas anuales de referencia</span><strong id="annual">—</strong></div>
+<div class="metric"><span>Distribución irregular anual (5 %, según cartel)</span><strong id="irregular">—</strong></div>
+<div class="metric"><span>Días al año indicados</span><strong id="daysYear">—</strong></div>
+<div class="metric"><span>Jornada habitual</span><strong id="pattern">—</strong></div>
+</div>
+<div class="alert ok">El 5 % de jornada irregular no se suma a las horas anuales: se refiere a la distribución de una parte de la jornada. La aplicación reproduce las cifras del cartel y no interpreta si procede utilizar ese 5 % en un caso concreto.</div>
+</section>
+<section class="panel" aria-labelledby="title2"><h2 id="title2">2. Horas proporcionales por fecha de incorporación</h2>
+<p class="note">Ejemplo: alguien que empezó el 27/07/2026 no tendría por qué completar la jornada anual íntegra de una persona contratada desde enero.</p>
+<div class="grid">
+<div class="field"><label for="start">Fecha de inicio</label><input type="date" id="start" min="2026-01-01" max="2026-12-31" value="2026-07-27"></div>
+<div class="field"><label for="end">Calcular hasta</label><input type="date" id="end" min="2026-01-01" max="2026-12-31" value="2026-12-31"></div>
+<div class="field full"><label for="logged">Horas que has contado en tus rotas (opcional)</label><input id="logged" type="number" min="0" max="3000" step="0.01" inputmode="decimal" placeholder="Ej.: 295"><p class="note">Introduce las horas correspondientes exactamente al mismo período seleccionado. No introduzcas tu nombre ni datos de otra persona.</p></div>
+</div>
+<div id="validation" role="alert" class="alert" hidden></div>
+<div class="results" id="proportionalResults" aria-live="polite">
+<div class="metric feature"><span>Horas proporcionales estimadas</span><strong id="proportional">—</strong></div>
+<div class="metric"><span>Días naturales incluidos</span><strong id="periodDays">—</strong></div>
+<div class="metric"><span>Horas de tus rotas introducidas</span><strong id="shownLogged">—</strong></div>
+<div class="metric"><span>Diferencia orientativa (referencia − rotas)</span><strong id="difference">—</strong></div>
+</div>
+<p id="method" class="steps" aria-live="polite"></p>
+<div class="alert"><strong>Importante:</strong> la diferencia NO es una deuda de horas. Las rotas muestran horas planificadas, no necesariamente fichadas ni todas las horas computables. Hay que revisar vacaciones, permisos, bajas, semanas sin rota, festivos, cambios de contrato y el calendario laboral aplicable. La regla de tres es orientativa.</div>
+<div class="actions"><button id="copy" type="button" class="btn">Copiar mi cálculo</button><button id="print" type="button" class="btn subtle">Imprimir resultado</button></div>
+</section>
+<section class="panel"><h2>¿Cómo se hace la regla de tres?</h2><p class="steps">1. Busca en el cartel las horas anuales de tu contrato.<br>2. Cuenta los días naturales desde tu fecha de incorporación hasta la fecha de consulta, ambos incluidos.<br>3. Multiplica las horas anuales por esos días y divide entre los 365 días que tiene 2026.<br>4. Compara la referencia con tus registros, pero no consideres la diferencia un saldo definitivo sin revisar incidencias.</p>
+<p class="note">Ejemplo: 25 h/semana → 1.116 h/año. Del 27/07/2026 al 31/12/2026 hay 158 días: 1.116 × 158 ÷ 365 = 483,02 h aproximadamente.</p>
+<p class="note"><strong>Advertencia sobre el cartel:</strong> algunos datos pueden requerir comprobación, en especial la fila de 16 h (877 h/año) y la combinación indicada para 32 h. Se han mantenido tal cual figuran en el material aportado, sin corregirlos ni extrapolarlos a otros años.</p>
+</section>
+</main>
+<footer><div class="wrap"><p>CGT Primark Gran Vía · Herramienta informativa de 2026. No constituye una certificación del cómputo laboral individual.</p></div></footer>
+<script>
+"use strict";
+const rows=[
+["39,5 h · 5 días/semana",1765,88,224,5,8],
+["35 h · 5 días/semana",1563,78,224,5,7],
+["32 h · 5 días/semana (según cartel)",1429,71,179,5,6.5],
+["30 h · 5 días/semana",1340,67,224,5,6],
+["25 h · 5 días/semana",1116,55,224,5,5],
+["24 h · 4 días/semana",1071,53,179,4,6],
+["20 h · 5 días/semana",893,44,224,5,4],
+["20 h · 4 días/semana",893,44,179,4,5],
+["18 h · 3 días/semana",803,40,110,3,6],
+["16 h · 2 días/semana (revisar cartel)",877,43,110,2,8],
+["12 h · 2 días/semana",536,26,90,2,6],
+["12 h · 3 días/semana",536,26,134,3,4]
+];
+const $=id=>document.getElementById(id);
+const fmt=x=>Number(x).toLocaleString("es-ES",{minimumFractionDigits:0,maximumFractionDigits:2});
+const fmt2=x=>Number(x).toLocaleString("es-ES",{minimumFractionDigits:2,maximumFractionDigits:2});
+rows.forEach((row,i)=>{const o=document.createElement("option");o.value=String(i);o.textContent=row[0];$("contract").append(o)});
+$("contract").value="4";
+let copyText="";
+function calc(){
+ const row=rows[Number($("contract").value)];
+ const [label,annual,irregular,yearDays,weekDays,daily]=row;
+ $("annual").textContent=fmt(annual)+" h";
+ $("irregular").textContent=fmt(irregular)+" h";
+ $("daysYear").textContent=String(yearDays)+" días";
+ $("pattern").textContent=weekDays+" días × "+fmt(daily)+" h";
+ const start=$("start").value,end=$("end").value;
+ const good=/^2026-\d\d-\d\d$/;
+ const a=good.test(start)?Date.parse(start+"T00:00:00Z"):NaN;
+ const b=good.test(end)?Date.parse(end+"T00:00:00Z"):NaN;
+ const loggedRaw=$("logged").value.trim();
+ const logged=loggedRaw===""?null:Number(loggedRaw);
+ const invalid=!Number.isFinite(a)||!Number.isFinite(b)||b<a||a<Date.parse("2026-01-01T00:00:00Z")||b>Date.parse("2026-12-31T00:00:00Z")||(logged!==null&&(!Number.isFinite(logged)||logged<0||logged>3000));
+ $("validation").hidden=!invalid;$("validation").textContent=invalid?"Revisa las fechas y las horas introducidas: deben estar dentro de 2026, el final no puede ser anterior al inicio y las horas no pueden ser negativas.":"";
+ $("proportionalResults").hidden=invalid;
+ $("copy").disabled=invalid;
+ if(invalid){$("method").textContent="";copyText="";return;}
+ const days=Math.round((b-a)/86400000)+1;
+ const prop=annual*days/365;
+ const diff=logged===null?null:prop-logged;
+ $("proportional").textContent=fmt2(prop)+" h";
+ $("periodDays").textContent=String(days);
+ $("shownLogged").textContent=logged===null?"Sin indicar":fmt2(logged)+" h";
+ $("difference").textContent=diff===null?"Sin calcular":(diff>0?"+":"")+fmt2(diff)+" h";
+ $("method").textContent="Regla de tres: "+fmt(annual)+" h × "+days+" días ÷ 365 = "+fmt2(prop)+" h. Período: "+start.split("-").reverse().join("/")+" a "+end.split("-").reverse().join("/")+".";
+ copyText="CGT Primark Gran Vía · Simulación de jornada 2026\nContrato: "+label+"\nHoras anuales del cartel: "+annual+" h\nPeríodo: "+start+" a "+end+" ("+days+" días)\nReferencia proporcional: "+fmt2(prop)+" h\nHoras introducidas: "+(logged===null?"no indicadas":fmt2(logged)+" h")+"\nDiferencia orientativa: "+(diff===null?"no calculada":fmt2(diff)+" h")+"\nNo constituye una deuda o saldo laboral definitivo.";
+}
+["contract","start","end","logged"].forEach(id=>$(id).addEventListener("input",calc));
+$("copy").addEventListener("click",async()=>{if(!copyText)return;try{await navigator.clipboard.writeText(copyText);$("copy").textContent="Copiado";setTimeout(()=>$("copy").textContent="Copiar mi cálculo",1800)}catch{window.prompt("Copia el resultado:",copyText)}});
+$("print").addEventListener("click",()=>window.print());
+calc();
+</script>
+</body></html>
