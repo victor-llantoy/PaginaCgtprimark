@@ -1,4 +1,5 @@
 import { $, money, num, val, out, validNumbers } from "./ui.js";
+import { referenciaJornada } from "./jornadas.js";
 function calcHuelga() {
   const amounts = ["hb", "hp", "ha", "h10", "h11"].map(num);
   if (amounts.some((x) => x < 0))
@@ -22,14 +23,7 @@ function calcNomina() {
 }
 
 function calcHoras() {
-  if (!validNumbers(["ref", "full", "weekly", "done"]) || num("full") <= 0)
-    return out(
-      "Comprueba las horas: la jornada de referencia debe ser mayor que cero.",
-    );
-  const annual = (num("ref") * num("weekly")) / num("full");
-  out(
-    `<strong class="big">${annual.toFixed(2)} h</strong>Referencia anual proporcional<br>Pendientes según datos introducidos: <b>${(annual - num("done")).toFixed(2)} h</b>`,
-  );
+  out(referenciaJornada(val("annual-contract")));
 }
 
 function calcVac() {

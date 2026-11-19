@@ -56,12 +56,26 @@ const {
         );
       }
       await openTool(page, "horas");
-      await page.locator("#full").fill("0");
-      await page.locator("[data-action=calcHoras]").click();
-      assert.match(await page.locator("#result").innerText(), /mayor que cero/);
-      await page.locator("#full").fill("39.5");
-      await page.locator("[data-action=calcHoras]").click();
-      assert.match(await page.locator("#result").innerText(), /1117\.09/);
+      assert.equal(await page.locator("#annual-contract option").count(), 12);
+      assert.match(await page.locator("#result").innerText(), /1\.765 h/);
+      assert.match(await page.locator("#result").innerText(), /88 h/);
+      assert.equal(await page.locator("#result").getAttribute("aria-live"), "polite");
+      assert.equal(await page.locator("#workContent input").count(), 0);
+      // Reference figures must stay as supplied, rather than being recomputed.
+      for (const [id, annual, irregular, days, perWeek, daily] of [
+        ["25-5", "1.116 h", "55 h", "224", "5", "5 h"],
+        ["16-2", "877 h", "43 h", "110", "2", "8 h"],
+        ["20-5", "893 h", "44 h", "224", "5", "4 h"],
+        ["20-4", "893 h", "44 h", "179", "4", "5 h"],
+        ["12-2", "536 h", "26 h", "90", "2", "6 h"],
+        ["12-3", "536 h", "26 h", "134", "3", "4 h"],
+      ]) {
+        await page.locator("#annual-contract").selectOption(id);
+        assert.deepEqual(await page.locator("#result dd").allTextContents(),
+          [annual, irregular, days, perWeek, daily], id);
+      }
+      assert.equal(await page.evaluate(() =>
+        document.documentElement.scrollWidth > innerWidth), false, `hours overflow ${width}`);
       await page.locator(".brand").click();
       await page.locator(".hero [data-target=permisos2028]").click();
       assert.equal(await page.locator("#permisos2028").isVisible(), true);

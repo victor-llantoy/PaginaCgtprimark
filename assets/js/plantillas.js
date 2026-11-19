@@ -1,4 +1,5 @@
 import { f, sel, note, result, button } from "./ui.js";
+import { jornadas, numeroJornada, referenciaJornada } from "./jornadas.js";
 function content(id) {
   switch (id) {
     case "huelga":
@@ -26,12 +27,16 @@ function content(id) {
         `<div class="formgrid">${f("base", "Salario base mensual (€)", "number", 0, 'min="0" step="0.01"')}${f("extra", "Pagas prorrateadas (€)", "number", 0, 'min="0" step="0.01"')}${f("anti", "Antigüedad (€)", "number", 0, 'min="0" step="0.01"')}${f("plus", "Otros complementos (€)", "number", 0, 'min="0" step="0.01"')}${f("ded", "Descuentos totales (€)", "number", 0, 'min="0" step="0.01"')}</div>${button("calcNomina")}${result("Introduce los importes para obtener una estimación.")}`
       );
     case "horas":
-      return (
-        note(
-          "La jornada anual de referencia debe verificarse con el convenio y el contrato. Introduce tu propia cifra aplicable; los resultados son una ayuda de control, no una auditoría de horarios.",
-        ) +
-        `<div class="formgrid">${f("ref", "Jornada anual de referencia a tiempo completo (h)", "number", 1765, 'min="0" step="0.01"')}${f("full", "Jornada semanal completa de referencia (h)", "number", 39.5, 'min="1" step="0.5"')}${f("weekly", "Horas semanales de tu contrato", "number", 25, 'min="0" step="0.5"')}${f("done", "Horas computables acumuladas", "number", 0, 'min="0" step="0.01"')}</div>${button("calcHoras")}${result("Introduce los datos para calcular tu referencia anual proporcional.")}`
-      );
+      return `<div class="annual-hours">
+        <p id="annual-hours-source">Datos de referencia del cartel de jornada laboral de CGT Primark Gran Vía.</p>
+        <div class="field">
+          <label for="annual-contract">Elige tu jornada semanal</label>
+          <select id="annual-contract" data-change-action="calcHoras" aria-describedby="annual-hours-source">
+            ${jornadas.map((jornada) => `<option value="${jornada.id}">${numeroJornada(jornada.semanal)} h · ${jornada.diasSemanales} días/semana</option>`).join("")}
+          </select>
+        </div>
+        <div class="result" id="result" aria-live="polite" aria-atomic="true">${referenciaJornada(jornadas[0].id)}</div>
+      </div>`;
     case "vacaciones":
       return (
         note(
